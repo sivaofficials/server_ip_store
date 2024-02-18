@@ -10,6 +10,20 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+function makeid(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
+
+
 
 app.get("/",async (req, res) => {
     let rep = await dbs.getdata();
@@ -25,7 +39,10 @@ app.get("/",async (req, res) => {
         domain: req.body.domain,
         username: req.body.username,
         password: req.body.password,
+        st:makeid(5),
       };
+      
+
     dbs.store(data)
     res.redirect("/")
   });

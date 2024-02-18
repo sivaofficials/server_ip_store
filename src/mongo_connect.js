@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
     domain: String,
     username: String,
     password: String,
+    st:String,
 })
 const Ip =mongoose.model("ip",UserSchema)
 

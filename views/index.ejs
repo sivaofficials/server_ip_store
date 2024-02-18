@@ -27,7 +27,7 @@
       <td><%= post.localname %></td>
       <td><%= post.domain %></td>
       <td>
-        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal_<%= post.IP %>">U/P</button>
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal_<%= post.st %>">U/P</button>
       </td>
       <td>
         <form action="/del" method="post">
@@ -36,7 +36,7 @@
       </td>
     </tr>
   
-    <div class="modal fade" id="exampleModal_<%= post.IP %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal_<%= post.st %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
