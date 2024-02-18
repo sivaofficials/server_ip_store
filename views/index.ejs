@@ -18,24 +18,52 @@
     <th>IP Address</th>
     <th>Local Names</th>
     <th>Domain</th>
-    <th>options</th>
+    <!-- <th>options</th> -->
   </tr>
   <!-- reder by nodejs / for u/p add from and get data for u and p/delete -->
+  <% data.forEach((post) => { %>
+    <tr>
+      <td><%= post.IP %></td>
+      <td><%= post.localname %></td>
+      <td><%= post.domain %></td>
+      <td>
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal_<%= post.IP %>">U/P</button>
+      </td>
+      <td>
+        <form action="/del" method="post">
+          <button type="submit" name="del1" class="btn btn-danger" value="<%= post.IP %>">X</button>
+        </form>
+      </td>
+    </tr>
+  
+    <div class="modal fade" id="exampleModal_<%= post.IP %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Username: <%= post.username %><br>
+            Password: <%= post.password %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% }); %>
+  
 
-  <tr >
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
-    <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" value="">U/P</button>
-    <button type="button" class="btn btn-danger" >X</button></td>
-  </tr>
-  <tr>
+
+  <!-- <tr>
     <td>Centro comercial Moctezuma</td>
     <td>Francisco Chang</td>
     <td>Mexico</td>
     <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">U/P</button>
-    <button type="button" class="btn btn-danger" >X</button></td>
-  </tr>
+    <button type="button" class="btn btn-danger" value="">X</button></td>
+  </tr> -->
   
   <form action="/add" method="post">
   <tr>
@@ -61,24 +89,10 @@
 </div>
 
 
+  
+
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Username: <br>
-          Password:
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
   <script src="/js/sidebars.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

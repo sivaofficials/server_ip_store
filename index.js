@@ -4,18 +4,19 @@ const { localsName, render } = require("ejs");
 const cookieParser = require("cookie-parser");
 const dbs = require("./src/mongo_connect.js");
 const app = express();
-
+let k
 app.use(cookieParser());
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.get("/", (req, res) => {
-    res.render("index");
+app.get("/",async (req, res) => {
+    let rep = await dbs.getdata();
+   
+    res.render("index", { data: rep ,data1: k});
   });
 
-arr =[]
 
   app.post("/add", (req, res) => {
     let data = {
@@ -25,10 +26,18 @@ arr =[]
         username: req.body.username,
         password: req.body.password,
       };
-   
-    arr.push(data)
-    console.log(arr)
+    dbs.store(data)
+    res.redirect("/")
   });
+
+app.post("/del",(req,res)=>{
+  let del=req.body.del1
+  dbs.reports_del(del)
+  res.redirect("/")
+});
+
+
+  
 
 app.listen(3000, function (req, res) {
     console.log("server is up");
