@@ -18,7 +18,7 @@ const SecuritySchema = new mongoose.Schema({
   paswrd: String,
   toks: String,
 });
-const sec = mongoose.model("security", SecuritySchema);
+const sec_model = mongoose.model("security", SecuritySchema);
 
 exports.store = async (data) => {
   const newperson = new Ip(data);
@@ -43,4 +43,17 @@ exports.reports_del = async (ip) => {
     .catch(function (err) {
       console.log(err);
     });
+};
+
+exports.createuser = async (user) => {
+  const user = new sec_model(data);
+  await user.save();
+  return user;
+};
+
+exports.getuserAuth = async (uname, password) => {
+  const user = await sec_model.find({
+    $and: [{ uname: uname }, { paswrd: password }],
+  });
+  return user;
 };
