@@ -2,7 +2,7 @@ const db = require("./mongo_connect");
 const jwt = require("./jwt");
 
 exports.createNewuser = async (user) => {
-  console.log(user.toks);
+  // console.log(user.toks);
   if (user.toks === "b9da6c51a94b15a4c329734263a9980b") {
     await db.createuser(user);
     return 1;

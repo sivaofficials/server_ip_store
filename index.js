@@ -68,9 +68,9 @@ app.get("/", async (req, res) => {
 app.post("/login", async (req, res) => {
   let uname = req.body.username;
   let passw = req.body.password;
-  console.log(`${uname} , ${passw}`);
+  // console.log(`${uname} , ${passw}`);
   let toks = await backend.auth(uname, passw);
-  console.log(toks);
+  // console.log(toks);
   if (toks != "f") {
     res.cookie("token", toks);
     res.redirect("/store");
@@ -95,5 +95,5 @@ app.post("/cretuser", async (req, res) => {
 });
 
 app.listen(3000, function (req, res) {
-  console.log("server is up");
+  console.log("server up in http://127.0.0.1:3000");
 });
