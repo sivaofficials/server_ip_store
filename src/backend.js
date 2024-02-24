@@ -27,10 +27,15 @@ exports.auth = async (uname, passwd) => {
 };
 
 exports.checktoks = (toks) => {
-  let uname = jwt.dectoks(toks);
-  if (uname == undefined || uname == "None") {
+  let uval = jwt.dectoks(toks);
+  if (uval != "error") {
     return 0;
   } else {
-    return 1;
+    return 0;
   }
+};
+
+exports.createtoks = (name) => {
+  let toks = jwt.getNewtoks(name);
+  return toks;
 };

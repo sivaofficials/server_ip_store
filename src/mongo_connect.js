@@ -45,14 +45,14 @@ exports.reports_del = async (ip) => {
     });
 };
 
-exports.createuser = async (user) => {
-  const user = new sec_model(data);
+exports.createuser = async (data) => {
+  let user = new sec_model(data);
   await user.save();
   return user;
 };
 
 exports.getuserAuth = async (uname, password) => {
-  const user = await sec_model.find({
+  let user = await sec_model.find({
     $and: [{ uname: uname }, { paswrd: password }],
   });
   return user;

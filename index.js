@@ -24,10 +24,18 @@ function makeid(length) {
   return result;
 }
 
-app.get("/", async (req, res) => {
-  let rep = await dbs.getdata();
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmFtZSI6Im1vbmsiLCJpYXQiOjE3MDg3MDY5Nzd9.TTzgsD2meEQLKjyuwrJE1sbaLAnWPxKtBRWeYv0gNjs
 
-  res.render("index", { data: rep, data1: k });
+app.get("/store", async (req, res) => {
+  let token = backend.checktoks(req.cookies.token);
+  console.log(typeof token);
+  // console.log(req.cookies.tl);
+  if (token == 1 || typeof token !== "undefined") {
+    let rep = await dbs.getdata();
+    res.render("index", { data: rep, data1: k });
+  } else {
+    res.render("login");
+  }
 });
 
 app.post("/add", (req, res) => {
@@ -48,6 +56,30 @@ app.post("/del", (req, res) => {
   let del = req.body.del1;
   dbs.reports_del(del);
   res.redirect("/");
+});
+
+app.get("/", (req, res) => {
+  res.render("login");
+});
+
+app.post("/login", async (req, res) => {
+  let uname = req.body.username;
+  let passw = req.body.password;
+  console.log(`${uname} , ${passw}`);
+  let toks = await backend.auth(uname, passw);
+  console.log(toks);
+  if (toks != "f") {
+    res.cookie("token", toks);
+    res.redirect("/store");
+  } else {
+    res.render("login");
+  }
+  // res.render("login");
+});
+
+app.post("/gettoks", (req, res) => {
+  let tok = backend.createtoks(req.body.name);
+  res.json({ toks: tok });
 });
 
 app.listen(3000, function (req, res) {
