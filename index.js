@@ -26,7 +26,7 @@ function makeid(length) {
 
 app.get("/store", async (req, res) => {
   let token = backend.checktoks(req.cookies.token);
-  console.log(token);
+  // console.log(token);
   if (token == 1) {
     let rep = await dbs.getdata();
     res.render("index", { data: rep, data1: k });
@@ -55,8 +55,14 @@ app.post("/del", (req, res) => {
   res.redirect("/");
 });
 
-app.get("/", (req, res) => {
-  res.render("login");
+app.get("/", async (req, res) => {
+  let token = backend.checktoks(req.cookies.token);
+  if (token == 1) {
+    let rep = await dbs.getdata();
+    res.render("index", { data: rep, data1: k });
+  } else {
+    res.render("login");
+  }
 });
 
 app.post("/login", async (req, res) => {
@@ -74,9 +80,18 @@ app.post("/login", async (req, res) => {
   // res.render("login");
 });
 
-app.post("/gettoks", (req, res) => {
-  let tok = backend.createtoks(req.body.name);
-  res.json({ toks: tok });
+app.post("/cretuser", async (req, res) => {
+  let user = {
+    uname: req.body.uname,
+    paswrd: req.body.paswrd,
+    toks: req.body.toks,
+  };
+  let val = await backend.createNewuser(user);
+  if (val == 1) {
+    res.json({ status: "success", msg: "account Created" });
+  } else {
+    res.json({ status: "failed", msg: "account Not Created" });
+  }
 });
 
 app.listen(3000, function (req, res) {
