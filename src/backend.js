@@ -29,7 +29,7 @@ exports.auth = async (uname, passwd) => {
 exports.checktoks = (toks) => {
   let uval = jwt.dectoks(toks);
   if (uval != "error") {
-    return 0;
+    return 1;
   } else {
     return 0;
   }

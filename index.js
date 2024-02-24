@@ -24,17 +24,14 @@ function makeid(length) {
   return result;
 }
 
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmFtZSI6Im1vbmsiLCJpYXQiOjE3MDg3MDY5Nzd9.TTzgsD2meEQLKjyuwrJE1sbaLAnWPxKtBRWeYv0gNjs
-
 app.get("/store", async (req, res) => {
   let token = backend.checktoks(req.cookies.token);
-  console.log(typeof token);
-  // console.log(req.cookies.tl);
-  if (token == 1 || typeof token !== "undefined") {
+  console.log(token);
+  if (token == 1) {
     let rep = await dbs.getdata();
     res.render("index", { data: rep, data1: k });
   } else {
-    res.render("login");
+    res.redirect("/");
   }
 });
 
