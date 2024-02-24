@@ -74,9 +74,18 @@ app.post("/login", async (req, res) => {
   // res.render("login");
 });
 
-app.post("/gettoks", (req, res) => {
-  let tok = backend.createtoks(req.body.name);
-  res.json({ toks: tok });
+app.post("/cretuser", async (req, res) => {
+  let user = {
+    uname: req.body.uname,
+    paswrd: req.body.paswrd,
+    toks: req.body.toks,
+  };
+  let val = await backend.createNewuser(user);
+  if (val == 1) {
+    res.json({ status: "success", msg: "account Created" });
+  } else {
+    res.json({ status: "failed", msg: "account Not Created" });
+  }
 });
 
 app.listen(3000, function (req, res) {
